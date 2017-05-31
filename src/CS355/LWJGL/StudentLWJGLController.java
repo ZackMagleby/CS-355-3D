@@ -27,10 +27,10 @@ import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.opengl.GL11.glOrtho;
 
 import java.util.Iterator;
 
-import static org.lwjgl.opengl.GL11.glOrtho;
 
 /**
  *
@@ -137,11 +137,10 @@ public class StudentLWJGLController implements CS355LWJGLController
         glClear(GL_COLOR_BUFFER_BIT);
         setMatrices();
         drawLines();
-        //Do your drawing here.
-        
     }
     
     public void drawLines(){
+    	//Do your drawing here.
         Iterator<Line3D> lines = model.getLines();
         while(lines.hasNext()){
         	Line3D line = lines.next();
