@@ -47,6 +47,7 @@ public class StudentLWJGLController implements CS355LWJGLController
   private WireFrame model = new HouseModel();
   
   Point3D cameraPos = new Point3D(-.1, -2.5,-5);
+  //Point3D cameraPos = new Point3D(0, 0, 0);
   Double rotation = 80.0;
   int mode = 0;
 
@@ -56,6 +57,7 @@ public class StudentLWJGLController implements CS355LWJGLController
   public void resizeGL() 
   {
 	  GL11.glViewport(0, 0, 640, 480);
+	  GL11.glMatrixMode(GL_PROJECTION);
 		//Initialize ModelView
 		//Initialize Projection
   }
@@ -136,7 +138,7 @@ public class StudentLWJGLController implements CS355LWJGLController
         //This clears the screen.
         glClear(GL_COLOR_BUFFER_BIT);
         setMatrices();
-        drawLines();
+        //drawLines();
     }
     
     public void drawLines(){
@@ -157,11 +159,14 @@ public class StudentLWJGLController implements CS355LWJGLController
     }
     
     public void setMatrices(){
+    	
     	GL11.glMatrixMode(GL_MODELVIEW);
     	GL11.glLoadIdentity();
     	GL11.glRotated(rotation, 0, 0, 0);
     	GL11.glTranslated(cameraPos.x, cameraPos.y, cameraPos.z);
+    	drawLines();
     	
+    	GL11.glMatrixMode(GL_PROJECTION);
 		//matrixMode(GL_PRojectionMatrix)
 		//loadIdentity
 		//rotate
