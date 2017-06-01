@@ -16,17 +16,17 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBegin;//
 import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glColor3f;//
+import static org.lwjgl.opengl.GL11.glEnd;//
+import static org.lwjgl.opengl.GL11.glLoadIdentity;//
+import static org.lwjgl.opengl.GL11.glMatrixMode;//
 import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glRotatef;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex3d;
-import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.opengl.GL11.glRotatef;//
+import static org.lwjgl.opengl.GL11.glTranslatef;//
+import static org.lwjgl.opengl.GL11.glVertex3d;//
+import static org.lwjgl.opengl.GL11.glViewport;//
 import static org.lwjgl.opengl.GL11.glOrtho;
 
 import java.util.Iterator;
@@ -48,7 +48,7 @@ public class StudentLWJGLController implements CS355LWJGLController
   
   Point3D cameraPos = new Point3D(-.1, -2.5,-5);
   //Point3D cameraPos = new Point3D(0, 0, 0);
-  Double rotation = 80.0;
+  Double rotation = 0.0;
   int mode = 0;
 
   //This method is called to "resize" the viewport to match the screen.
@@ -98,12 +98,12 @@ public class StudentLWJGLController implements CS355LWJGLController
         else if(Keyboard.isKeyDown(Keyboard.KEY_Q)) 
         {
             System.out.println("You are pressing Q!");
-            rotation -= .1;
+            rotation -= 1;
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_E)) 
         {
             System.out.println("You are pressing E!");
-            rotation += .1;
+            rotation += 1;
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_R)) 
         {
@@ -159,14 +159,21 @@ public class StudentLWJGLController implements CS355LWJGLController
     }
     
     public void setMatrices(){
-    	
+    	int f = 100;
+    	int n = 1;
+    	double clipScale = (f+n)/(f-n);
+    	double otherScale = (-2*n*f)/(f-n);
+    	GL11.glMatrixMode(GL_PROJECTION);
+
     	GL11.glMatrixMode(GL_MODELVIEW);
     	GL11.glLoadIdentity();
-    	GL11.glRotated(rotation, 0, 0, 0);
+    	GL11.glRotated(rotation, 0, cameraPos.y, 0);
     	GL11.glTranslated(cameraPos.x, cameraPos.y, cameraPos.z);
     	drawLines();
     	
     	GL11.glMatrixMode(GL_PROJECTION);
+    	//GL11.glRotated(-rotation, 0, -cameraPos.y, 0); 	
+    	//GL11.glTranslated(-cameraPos.x, -cameraPos.y, -cameraPos.z);
 		//matrixMode(GL_PRojectionMatrix)
 		//loadIdentity
 		//rotate
