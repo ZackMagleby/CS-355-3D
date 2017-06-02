@@ -60,8 +60,8 @@ public class StudentLWJGLController implements CS355LWJGLController
 		  {0.2f, 0f, 0.8f},
 		  {0.4f, 0f, 0.6f},
 		  {0.6f, 0f, 0.4f},
-		  {0.8f, 0f, 0.2f},
-		  {1f, 0f, 0f}};
+		  {0.8f, .1f, 0.2f},
+		  {1f, 1f, 0f}};
 
   //This method is called to "resize" the viewport to match the screen.
   //When you first start, have it be in perspective mode.
