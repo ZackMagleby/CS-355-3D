@@ -11,9 +11,6 @@ package CS355.LWJGL;
 //Of course, your milage may vary. Don't feel restricted by this list of imports.
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLUConstants;
-
-import sun.text.resources.es.FormatData_es_SV;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_LINES;
@@ -35,7 +32,6 @@ import org.lwjgl.util.glu.GLU;
 
 
 import java.util.Iterator;
-
 
 /**
  *
@@ -59,6 +55,13 @@ public class StudentLWJGLController implements CS355LWJGLController
   int nearPlane = 0;
   final double fov = 90.0;
   LWJGLSandbox sandbox = new LWJGLSandbox();
+  
+  float[][] colors = {{0f, 0f, 1f},
+		  {0.2f, 0f, 0.8f},
+		  {0.4f, 0f, 0.6f},
+		  {0.6f, 0f, 0.4f},
+		  {0.8f, 0f, 0.2f},
+		  {1f, 0f, 0f}};
 
   //This method is called to "resize" the viewport to match the screen.
   //When you first start, have it be in perspective mode.
@@ -69,6 +72,8 @@ public class StudentLWJGLController implements CS355LWJGLController
 	  glViewport((int)cameraPos.x, (int)cameraPos.y, sandbox.DISPLAY_WIDTH, sandbox.DISPLAY_HEIGHT);
 	  mode = 1;
 	  GLU.gluPerspective((float)fov, (float)4/3, (float)nearPlane, (float)farPlane);
+	  glColor3f(0.0f, 1.0f, 0.0f);
+	  
   }
 
     @Override
@@ -87,22 +92,26 @@ public class StudentLWJGLController implements CS355LWJGLController
         if(Keyboard.isKeyDown(Keyboard.KEY_W)) 
         {
             //System.out.println("You are pressing W!");
-            cameraPos.z += .1; 
+            cameraPos.z += Math.cos(Math.toRadians(rotation))/5;
+            cameraPos.x -= Math.sin(Math.toRadians(rotation))/5;
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_S)) 
         {
             //System.out.println("You are pressing S!");
-            cameraPos.z -= .1; 
+        	cameraPos.z -= Math.cos(Math.toRadians(rotation))/5;
+            cameraPos.x += Math.sin(Math.toRadians(rotation))/5;
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_A)) 
         {
             //System.out.println("You are pressing A!");
-            cameraPos.x += .1; 
+        	cameraPos.z -= Math.cos(Math.toRadians(rotation+90))/5 ;
+            cameraPos.x += Math.sin(Math.toRadians(rotation+90))/5 ;
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_D)) 
         {
             //System.out.println("You are pressing D!");
-            cameraPos.x -= .1;
+        	cameraPos.z += Math.cos(Math.toRadians(rotation+90))/5 ;
+            cameraPos.x -= Math.sin(Math.toRadians(rotation+90))/5 ;
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_Q)) 
         {
@@ -177,18 +186,30 @@ public class StudentLWJGLController implements CS355LWJGLController
     
     public void drawLines(){
     	//Do your drawing here.
-    	Iterator<Line3D> lines = model.getLines();
     	glBegin(GL_LINES);
-    	while(lines.hasNext()){
-    		Line3D line = lines.next();
-    		Point3D start = line.start;
-    		Point3D end = line.end;
-    		
-    		glColor3f(0.0f, 1.0f, 0.2f);
-    		
-    		glVertex3d(start.x, start.y, start.z);
-    		glVertex3d(end.x, end.y, end.z);
+    	int shift = 0;
+    	for(int i = 0; i<=5; i++){
+    		float[] curColor = colors[i];
+	    	Iterator<Line3D> lines = model.getLines();
+	    	
+	    	glColor3f(curColor[0], curColor[1], curColor[2]);
+	    	
+	    	if(i>=3){
+	    		glRotated(180, 0, 1, 0);
+	    		glTranslated(0, 0, -20);
+	    	}
+    		while(lines.hasNext()){
+    			Line3D line = lines.next();
+    			Point3D start = line.start;
+    			Point3D end = line.end;
+    			
+    			
+    			glVertex3d(start.x + shift, start.y, start.z);
+    			glVertex3d(end.x + shift, end.y, end.z);
+    		}		
+	    	shift += 15;
     	}
+    	
     	glEnd();
     }
 }
