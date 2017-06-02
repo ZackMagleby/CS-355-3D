@@ -145,7 +145,8 @@ public class StudentLWJGLController implements CS355LWJGLController
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_H)) 
         {
-            System.out.println(cameraPos.x + " " + cameraPos.y + " " + cameraPos.z);
+        	cameraPos = new Point3D(0, -2.5, -10);
+        	rotation = 0.0;
         }
     }
 
@@ -165,7 +166,7 @@ public class StudentLWJGLController implements CS355LWJGLController
     	glLoadIdentity();  
 
     	if(mode == 0){
-    		glOrtho(-30, 30, -30, 30, nearPlane, farPlane);
+    		glOrtho(-20, 20, -20, 20, nearPlane, farPlane);
     	}
     	else{
     		GLU.gluPerspective((float)fov, (float)4/3, (float)nearPlane, (float)farPlane);
