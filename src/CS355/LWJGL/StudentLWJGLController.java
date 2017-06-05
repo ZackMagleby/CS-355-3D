@@ -189,15 +189,17 @@ public class StudentLWJGLController implements CS355LWJGLController
     	//Do your drawing here.
     	glBegin(GL_LINES);
     	int shift = 0;
+    	int otherSide = 0;
     	for(int i = 0; i<=5; i++){
     		float[] curColor = colors[i];
 	    	Iterator<Line3D> lines = model.getLines();
 	    	
 	    	glColor3f(curColor[0], curColor[1], curColor[2]);
 	    	
-	    	if(i>=3){
+	    	if(i==3){
+	    		otherSide = 30;
+	    		shift = 0;
 	    		glRotated(180, 0, 1, 0);
-	    		glTranslated(0, 0, -20);
 	    	}
     		while(lines.hasNext()){
     			Line3D line = lines.next();
@@ -205,10 +207,11 @@ public class StudentLWJGLController implements CS355LWJGLController
     			Point3D end = line.end;
     			
     			
-    			glVertex3d(start.x + shift, start.y, start.z);
-    			glVertex3d(end.x + shift, end.y, end.z);
+    			glVertex3d(start.x + shift, start.y, start.z + otherSide);
+    			glVertex3d(end.x + shift, end.y, end.z + otherSide);
     		}		
 	    	shift += 15;
+	    	//otherSide += otherSide;
     	}
     	
     	glEnd();
